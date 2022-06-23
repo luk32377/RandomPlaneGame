@@ -1,6 +1,6 @@
 
-
-var ctx = document.getElementById("mCanvas").getContext("2d");
+var canvas = document.getElementById("mCanvas");
+var ctx = canvas.getContext("2d");
 var up = false;
 var down = false;
 var right = false;
@@ -27,6 +27,47 @@ document.onkeyup = function(e) {
     if (e.keyCode == 68) {
         right = false;
     }
+}
+
+document.ontouchstart = function(e) {
+    e.preventDefault();
+    var rect = canvas.getBoundingClientRect();
+    var touch = e.touches[0];
+    var tx = touch.clientX - rect.left;
+    var ty = touch.clientY - rect.top;
+    if (tx < canvas.width / 2) {
+        if (ty < canvas.height / 2) {
+            up = true;
+        } else {
+            down = true;
+        }
+    } else {
+        right = true;
+    }
+    //alert("Working2..." + tx + "   " + ty);
+}
+
+document.ontouchmove = function(e) {
+    e.preventDefault();
+    var rect = canvas.getBoundingClientRect();
+    var touch = e.touches[0];
+    var tx = touch.clientX - rect.left;
+    var ty = touch.clientY - rect.top;
+    if (tx < canvas.width / 2) {
+        if (ty < canvas.height / 2) {
+            up = true;
+        } else {
+            down = true;
+        }
+    } else {
+        right = true;
+    }
+}
+
+document.ontouchend = function(e) {
+    up = false;
+    right = false;
+    down = false;
 }
 
 var plane = new Image();
